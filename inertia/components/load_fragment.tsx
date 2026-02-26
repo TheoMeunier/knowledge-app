@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { usePage } from '@inertiajs/react'
 
 interface FragmentLoaderProps {
@@ -11,26 +11,37 @@ export function FragmentLoader({ source, fallback }: FragmentLoaderProps) {
   const [component, setComponent] = useState<React.ComponentType<any> | null>(null)
   const [componentProps, setComponentProps] = useState<any>(null)
 
+  const load = useCallback(async () => {
+    const response = await fetch(source, {
+      headers: {
+        'X-Inertia': 'true',
+        'X-Inertia-Fragment': 'true',
+        'X-Inertia-Version': assetVersion ?? '',
+      },
+    }).then((r) => r.json())
+
+    setComponentProps(response.props)
+
+    const modules = import.meta.glob('../fragments/**/*.tsx')
+    const key = `../fragments/${response.component}.tsx`
+    const mod = (await modules[key]()) as any
+    setComponent(() => mod.default)
+  }, [source, assetVersion])
+
   useEffect(() => {
-    const load = async () => {
-      const response = await fetch(source, {
-        headers: {
-          'X-Inertia': 'true',
-          'X-Inertia-Fragment': 'true',
-          'X-Inertia-Version': assetVersion ?? '',
-        },
-      }).then((r) => r.json())
+    load()
+  }, [load])
 
-      setComponentProps(response.props)
-
-      const modules = import.meta.glob('../fragments/**/*.tsx')
-      const key = `../fragments/${response.component}.tsx`
-      const mod = (await modules[key]()) as any
-      setComponent(() => mod.default)
+  useEffect(() => {
+    const handleRefresh = (e: CustomEvent) => {
+      if (e.detail.source === source) {
+        load()
+      }
     }
 
-    load()
-  }, [source])
+    window.addEventListener('refresh-fragment', handleRefresh as EventListener)
+    return () => window.removeEventListener('refresh-fragment', handleRefresh as EventListener)
+  }, [source, load])
 
   if (component === null) {
     return <>{fallback}</>

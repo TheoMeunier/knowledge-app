@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+
 const LoginController = () => import('#controllers/auth/login_controller')
 const HomeController = () => import('#controllers/home_controller')
 
@@ -16,6 +17,7 @@ const UpdateFileController = () => import('#controllers/tree/file/update_file_co
 
 const ListFolderController = () => import('#controllers/tree/folder/list_folder_controller')
 const StoreFolderController = () => import('#controllers/tree/folder/store_folder_controller')
+const RemoveFolderController = () => import('#controllers/tree/folder/remove_folder_controller')
 
 router.get('/', [HomeController, 'index']).as('home')
 
@@ -34,5 +36,6 @@ router
 
     router.get('/folders/list', [ListFolderController, 'render']).as('folders.list')
     router.post('/folders/create', [StoreFolderController, 'store']).as('folders.create')
+    router.delete('folders/:id/delete', [RemoveFolderController, 'remove']).as('folders.remove')
   })
   .as('tree')

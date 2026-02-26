@@ -10,7 +10,7 @@ export default class StoreFolderController {
     })
   )
 
-  async store({ request, response }: HttpContext) {
+  async store({ request, response, session }: HttpContext) {
     const { path, parentId } = await request.validateUsing(StoreFolderController.validator)
 
     await Folder.create({
@@ -18,6 +18,7 @@ export default class StoreFolderController {
       parentId: parentId,
     })
 
-    return response.redirect().toPath('/folders/list')
+    session.flash('success', 'Folders created with successfully')
+    return response.redirect().back()
   }
 }

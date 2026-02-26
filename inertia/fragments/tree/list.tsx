@@ -8,16 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import {
-  ChevronRight,
-  Ellipsis,
-  File,
-  FilePlus,
-  Folder,
-  FolderPlus,
-  SquarePen,
-  Trash2,
-} from 'lucide-react'
+import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, SquarePen, Trash2, } from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -39,7 +30,6 @@ interface TreeListProps {
 }
 
 export default function TreeList({ folders }: TreeListProps) {
-  console.log(folders)
   return (
     <SidebarContent>
       <SidebarGroup>
@@ -73,7 +63,7 @@ function Tree({ item }: TreeProps) {
               </div>
             </SidebarMenuButton>
             <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
-              <TreeAction folder={false} path={item.path} parentId={item.id} />
+              <TreeAction itemId={item.id} folder={false} path={item.path} parentId={item.id} />
             </div>
           </SidebarMenuItem>
         ))}
@@ -95,7 +85,7 @@ function Tree({ item }: TreeProps) {
             </SidebarMenuButton>
           </CollapsibleTrigger>
           <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
-            <TreeAction folder={true} path={item.path} parentId={item.id} />
+            <TreeAction itemId={item.id} folder={true} path={item.path} parentId={item.id} />
           </div>
         </div>
         <CollapsibleContent>
@@ -111,10 +101,12 @@ function Tree({ item }: TreeProps) {
 }
 
 function TreeAction({
+  itemId,
   folder,
   path,
   parentId,
 }: {
+  itemId: number
   folder: boolean
   path?: string
   parentId?: number
@@ -122,8 +114,6 @@ function TreeAction({
   const [openCreate, setOpenCreate] = useState(false)
   const [openCreateFolder, setOpenCreateFolder] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
-
-  console.log(parentId)
 
   return (
     <>
@@ -157,7 +147,7 @@ function TreeAction({
               </DropdownMenuItem>
             </DropdownMenuGroup>
           )}
-          {!folder && path !== '/' && (
+          {path !== '/' && (
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <SquarePen />
@@ -184,7 +174,7 @@ function TreeAction({
         open={openCreateFolder}
         onOpenChange={setOpenCreateFolder}
       />
-      <DeleteObjectTree id={1} open={openDelete} onOpenChange={setOpenDelete} />
+      <DeleteObjectTree id={itemId} open={openDelete} onOpenChange={setOpenDelete} />
     </>
   )
 }

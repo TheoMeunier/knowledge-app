@@ -21,7 +21,6 @@ interface CreateFolderProps {
 }
 
 export default function CreateFolderDialog({ parentId, open, onOpenChange }: CreateFolderProps) {
-  console.log('parentId', parentId)
   const { data, setData, processing, post } = useForm({
     path: '',
     parentId: parentId,
@@ -29,7 +28,17 @@ export default function CreateFolderDialog({ parentId, open, onOpenChange }: Cre
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    post('/folders/create', {})
+    post('/folders/create', {
+      onSuccess: () => {
+        onOpenChange(false)
+
+        window.dispatchEvent(
+          new CustomEvent('refresh-fragment', {
+            detail: { source: 'folders/list' },
+          })
+        )
+      },
+    })
   }
 
   return (

@@ -4,7 +4,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
-  DialogHeader, DialogTitle,
+  DialogHeader,
+  DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Loader2, Trash2 } from 'lucide-react'
@@ -17,11 +18,22 @@ interface DeleteObjectTree {
 }
 
 export default function DeleteObjectTree(props: DeleteObjectTree) {
+  const { delete: destroy, processing } = useForm()
 
-  const {delete: destroy, processing} = useForm()
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
-  const handleSubmit = () => {
-    destroy(`/tree/delete/${props.id}`)
+    destroy(`/folders/${props.id}/delete`, {
+      onSuccess: () => {
+        props.onOpenChange(false)
+
+        window.dispatchEvent(
+          new CustomEvent('refresh-fragment', {
+            detail: { source: 'folders/list' },
+          })
+        )
+      },
+    })
   }
 
   return (
