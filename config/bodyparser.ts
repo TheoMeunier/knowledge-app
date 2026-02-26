@@ -36,7 +36,7 @@ const bodyParserConfig = defineConfig({
   multipart: {
     /**
      * Enabling auto process allows bodyparser middleware to
-     * move all uploaded files inside the tmp folder of your
+     * move all uploaded files inside the tmp tree of your
      * operating system
      */
     autoProcess: true,

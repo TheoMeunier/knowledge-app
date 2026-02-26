@@ -3,11 +3,17 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+@import "./modules/editor.css";
+
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 :root {
+  --title: #121c42;
+  --green: #2aa75e;
   --background: oklch(1 0 0);
   --foreground: oklch(0.1450 0 0);
   --card: oklch(1 0 0);
@@ -176,5 +182,4 @@
     @apply bg-background text-foreground font-sans;
   }
 }
-
 

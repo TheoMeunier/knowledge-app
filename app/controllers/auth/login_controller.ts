@@ -14,6 +14,6 @@ export default class LoginController {
     const user = await User.verifyCredentials(email, password)
     await auth.use('web').login(user)
 
-    response.redirect('/dashboard')
+    response.redirect().toRoute('home')
   }
 }

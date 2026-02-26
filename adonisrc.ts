@@ -95,7 +95,7 @@ export default defineConfig({
   | Metafiles
   |--------------------------------------------------------------------------
   |
-  | A collection of files you want to copy to the build folder when creating
+  | A collection of files you want to copy to the build tree when creating
   | the production build.
   |
   */

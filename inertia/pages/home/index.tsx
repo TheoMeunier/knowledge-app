@@ -1,5 +1,7 @@
+import AppLayouts from '@/components/layouts/app-layouts'
+
 export default function Home() {
   return (
-    <div>Home page</div>
+    <AppLayouts>Home page</AppLayouts>
   )
 }

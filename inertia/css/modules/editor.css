@@ -11,7 +11,6 @@
   /* Editor container */
   .CodeMirror {
     background: var(--background);
-    color: var(--text);
     border: none;
     padding: 1rem 0;
   }
@@ -45,7 +44,7 @@
 
   /* Cursor */
   .CodeMirror-cursor {
-    border-left-color: var(--title);
+    border-left-color: var(--primary);
   }
 
   /* Selection */
@@ -78,14 +77,14 @@
   }
 
   .editor-toolbar a {
-    color: var(--title) !important;
+    color: var(--primary) !important;
   }
 
   .editor-toolbar button:hover,
   .editor-toolbar button.active {
     background: var(--primary);
     color: var(--primary-foreground);
-    border-color: var(--edge);
+    border-color: #00a7ff;
   }
 
   .editor-toolbar i.separator {
@@ -115,7 +114,7 @@
   .CodeMirror-fullscreen,
   .editor-toolbar.fullscreen,
   .editor-preview-side {
-    background: var(--background-light);
+    background: #FFF;
   }
 
   .editor-toolbar.fullscreen {
