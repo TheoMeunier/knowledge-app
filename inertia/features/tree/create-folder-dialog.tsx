@@ -34,7 +34,7 @@ export default function CreateFolderDialog({ parentId, open, onOpenChange }: Cre
 
         window.dispatchEvent(
           new CustomEvent('refresh-fragment', {
-            detail: { source: 'folders/list' },
+            detail: { source: '/folders/list' },
           })
         )
       },

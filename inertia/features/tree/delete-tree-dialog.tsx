@@ -29,7 +29,7 @@ export default function DeleteObjectTree(props: DeleteObjectTree) {
 
         window.dispatchEvent(
           new CustomEvent('refresh-fragment', {
-            detail: { source: 'folders/list' },
+            detail: { source: '/folders/list' },
           })
         )
       },
