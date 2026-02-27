@@ -13,6 +13,7 @@ const LoginController = () => import('#controllers/auth/login_controller')
 const HomeController = () => import('#controllers/home_controller')
 
 const StoreFileController = () => import('#controllers/tree/file/store_file_controller')
+const ShowFileController = () => import('#controllers/tree/file/show_file_controller')
 const UpdateFileController = () => import('#controllers/tree/file/update_file_controller')
 
 const ListFolderController = () => import('#controllers/tree/folder/list_folder_controller')
@@ -31,6 +32,7 @@ router.group(() => {
 router
   .group(() => {
     router.post('/file/create', [StoreFileController, 'store']).as('file.create')
+    router.get('/file/:slug', [ShowFileController, 'render']).as('file.show')
     router.get('/file/:id/edit', [UpdateFileController, 'render']).as('files.update')
     router.post('/file/:id/edit', [UpdateFileController, 'upgrade']).as('files.upgrade')
 

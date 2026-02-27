@@ -33,6 +33,7 @@ import CreateFileDialog from '@/features/tree/create-file-dialog'
 import CreateFolderDialog from '@/features/tree/create-folder-dialog'
 import DeleteObjectTree from '@/features/tree/delete-tree-dialog'
 import { FolderItem } from '@/types/tree.type'
+import { Link } from '@inertiajs/react'
 
 interface TreeListProps {
   folders: FolderItem[]
@@ -107,10 +108,12 @@ function Tree({ item }: TreeProps) {
             {item.files?.map((file, index) => (
               <SidebarMenuItem key={`file-${index}`} className="flex items-center group/item">
                 <SidebarMenuButton className="data-[active=true]:bg-transparent flex-1">
-                  <div className="flex items-center gap-2">
-                    <File className="size-4" />
-                    {file.title}
-                  </div>
+                  <Link href={`/file/${file.slug}`}>
+                    <div className="flex items-center gap-2">
+                      <File className="size-4" />
+                      {file.title}
+                    </div>
+                  </Link>
                 </SidebarMenuButton>
                 <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
                   <TreeAction itemId={file.id} folder={false} path={file.slug} parentId={item.id} />

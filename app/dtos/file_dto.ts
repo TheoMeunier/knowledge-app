@@ -22,13 +22,13 @@ export default class FileDto {
     this.createdAt = data.createdAt
   }
 
-  static async fromModel(post: File, markdownService: MarkdownService): Promise<FileDto> {
+  static async fromModel(file: File, markdownService: MarkdownService): Promise<FileDto> {
     return new FileDto({
-      id: post.id,
-      title: post.title,
-      slug: post.slug,
-      content: await markdownService.parse(post.content),
-      createdAt: post.createdAt.toFormat('dd/MM/yyyy'),
+      id: file.id,
+      title: file.title,
+      slug: file.slug,
+      content: await markdownService.parse(file.content),
+      createdAt: file.createdAt.toFormat('dd/MM/yyyy'),
     })
   }
 }

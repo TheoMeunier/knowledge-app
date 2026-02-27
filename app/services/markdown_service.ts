@@ -15,7 +15,7 @@ export default class MarkdownService {
       .use(remarkGfm)
       .use(remarkRehype, { allowDangerousHtml: true })
       .use(rehypeRaw)
-      .use(rehypeShiki, { theme: 'catppuccin-mocha' })
+      .use(rehypeShiki, { theme: 'catppuccin-macchiato' })
       .use(rehypeStringify)
       .process(markdown)
 
