@@ -67,11 +67,7 @@ function Tree({ item }: TreeProps) {
         {item.files?.map((file, index) => (
           <SidebarMenuItem key={index} className="flex items-center group/file">
             <SidebarMenuButton
-<<<<<<< HEAD
-              data-active={url === `/file/${file.slug}`}
-=======
               data-active={url.startsWith(`/file/${file.slug}`)}
->>>>>>> 9599830 (feat: active item in sidebar tree)
               className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
             >
               <div className="flex items-center gap-2">
@@ -117,11 +113,7 @@ function Tree({ item }: TreeProps) {
             {item.files?.map((file, index) => (
               <SidebarMenuItem key={`file-${index}`} className="flex items-center group/file">
                 <SidebarMenuButton
-<<<<<<< HEAD
-                  data-active={url === `/file/${file.slug}`}
-=======
                   data-active={url.startsWith(`/file/${file.slug}`)}
->>>>>>> 9599830 (feat: active item in sidebar tree)
                   className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
                 >
                   <Link href={`/file/${file.slug}`}>
