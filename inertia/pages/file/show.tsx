@@ -38,7 +38,7 @@ export default function ShowFile({ file }: FileProps) {
             <DropdownMenuContent>
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <Link href={`/file/${file.id}/edit`} className="flex items-center gap-2">
+                  <Link href={`/file/${file.slug}/edit`} className="flex items-center gap-2">
                     <SquarePen />
                     Edit
                   </Link>

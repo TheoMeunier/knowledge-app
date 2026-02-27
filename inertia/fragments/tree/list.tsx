@@ -8,16 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import {
-  ChevronRight,
-  Ellipsis,
-  File,
-  FilePlus,
-  Folder,
-  FolderPlus,
-  SquarePen,
-  Trash2,
-} from 'lucide-react'
+import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, SquarePen, Trash2, } from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -33,7 +24,7 @@ import CreateFileDialog from '@/features/tree/create-file-dialog'
 import CreateFolderDialog from '@/features/tree/create-folder-dialog'
 import DeleteObjectTree from '@/features/tree/delete-tree-dialog'
 import { FolderItem } from '@/types/tree.type'
-import { Link } from '@inertiajs/react'
+import { Link, usePage } from '@inertiajs/react'
 
 interface TreeListProps {
   folders: FolderItem[]
@@ -61,20 +52,31 @@ interface TreeProps {
 }
 
 function Tree({ item }: TreeProps) {
-  // Ce cas ne devrait plus arriver avec le fix, mais on le garde en sécurité
+  const { url } = usePage()
+
+  const isActive = (folder: typeof item): boolean => {
+    if (folder.files?.some((file) => url.startsWith(`/file/${file.slug}`))) return true
+    return !!folder.folders?.some((sub) => isActive(sub))
+  }
+
+  const hasActiveChild = isActive(item)
+
   if (!item.folders) {
     return (
       <>
         {item.files?.map((file, index) => (
-          <SidebarMenuItem key={index} className="flex items-center group/item">
-            <SidebarMenuButton className="data-[active=true]:bg-transparent flex-1">
+          <SidebarMenuItem key={index} className="flex items-center group/file">
+            <SidebarMenuButton
+              data-active={url === `/file/${file.slug}`}
+              className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
+            >
               <div className="flex items-center gap-2">
                 <File className="size-4" />
                 {file.title}
               </div>
             </SidebarMenuButton>
-            <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
-              <TreeAction itemId={item.id} folder={false} path={item.path} parentId={item.id} />
+            <div className="opacity-0 group-hover/file:opacity-100 transition-opacity">
+              <TreeAction itemId={file.id} folder={false} path={file.slug} parentId={item.id} />
             </div>
           </SidebarMenuItem>
         ))}
@@ -83,8 +85,11 @@ function Tree({ item }: TreeProps) {
   }
 
   return (
-    <SidebarMenuItem className="group/item">
-      <Collapsible className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90">
+    <SidebarMenuItem className="group/folder">
+      <Collapsible
+        className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
+        defaultOpen={hasActiveChild}
+      >
         <div className="flex items-center">
           <CollapsibleTrigger asChild>
             <SidebarMenuButton className="flex-1">
@@ -95,7 +100,7 @@ function Tree({ item }: TreeProps) {
               </div>
             </SidebarMenuButton>
           </CollapsibleTrigger>
-          <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
+          <div className="opacity-0 group-hover/folder:opacity-100 transition-opacity">
             <TreeAction itemId={item.id} folder={true} path={item.path} parentId={item.id} />
           </div>
         </div>
@@ -106,8 +111,11 @@ function Tree({ item }: TreeProps) {
             ))}
 
             {item.files?.map((file, index) => (
-              <SidebarMenuItem key={`file-${index}`} className="flex items-center group/item">
-                <SidebarMenuButton className="data-[active=true]:bg-transparent flex-1">
+              <SidebarMenuItem key={`file-${index}`} className="flex items-center group/file">
+                <SidebarMenuButton
+                  data-active={url === `/file/${file.slug}`}
+                  className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
+                >
                   <Link href={`/file/${file.slug}`}>
                     <div className="flex items-center gap-2">
                       <File className="size-4" />
@@ -115,7 +123,7 @@ function Tree({ item }: TreeProps) {
                     </div>
                   </Link>
                 </SidebarMenuButton>
-                <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
+                <div className="opacity-0 group-hover/file:opacity-100 transition-opacity">
                   <TreeAction itemId={file.id} folder={false} path={file.slug} parentId={item.id} />
                 </div>
               </SidebarMenuItem>
@@ -177,8 +185,10 @@ function TreeAction({
           {path !== '/' && (
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <SquarePen />
-                Edit
+                <Link href={`/file/${path}/edit`} className="flex items-center gap-2">
+                  <SquarePen />
+                  Edit
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 onSelect={(e) => {

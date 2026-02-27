@@ -10,7 +10,7 @@ export default class UpdateFileController {
   )
 
   async render({ params, inertia }: HttpContext) {
-    const file = await File.findByOrFail('id', params.id)
+    const file = await File.findByOrFail('slug', params.slug)
 
     return inertia.render('file/update', {
       file,
@@ -20,7 +20,7 @@ export default class UpdateFileController {
   async upgrade({ request, response, session }: HttpContext) {
     const { content } = await request.validateUsing(UpdateFileController.validator)
 
-    const file = await File.findByOrFail('id', request.param('id'))
+    const file = await File.findByOrFail('slug', request.param('slug'))
     file.content = content
     await file.save()
 
