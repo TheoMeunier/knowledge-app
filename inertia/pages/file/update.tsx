@@ -4,7 +4,17 @@ import { useForm } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 
-export default function UpdateFile({ file }) {
+interface FileProps {
+  file: {
+    id: number
+    title: string
+    slug: string
+    content: string
+    createdAt: string
+  }
+}
+
+export default function UpdateFile({ file }: FileProps) {
   const { data, setData, post, processing } = useForm({
     content: file.content,
   })
