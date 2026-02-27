@@ -5,6 +5,8 @@ import EasyMDE from 'easymde'
 type Props = {
   defaultValue: string
   name: string
+  value: string
+  onChange?: (value: string) => void
 }
 
 export default function MdEditor(props: Props) {
@@ -42,6 +44,12 @@ export default function MdEditor(props: Props) {
         'guide',
       ],
     })
+
+    if (props.onChange) {
+      editorRef.current.codemirror.on('change', () => {
+        props.onChange?.(editorRef.current!.value())
+      })
+    }
 
     return () => {
       editorRef.current?.toTextArea()

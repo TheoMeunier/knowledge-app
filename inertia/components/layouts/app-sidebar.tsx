@@ -1,11 +1,5 @@
-import {
-  Sidebar,
-  SidebarHeader,
-  SidebarRail,
-} from '@/components/ui/sidebar'
-import {
-  LibraryBig,
-} from 'lucide-react'
+import { Sidebar, SidebarHeader, SidebarRail } from '@/components/ui/sidebar'
+import { LibraryBig } from 'lucide-react'
 import { FragmentLoader } from '@/components/load_fragment'
 
 export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -17,10 +11,8 @@ export default function AppSidebar({ ...props }: React.ComponentProps<typeof Sid
         </div>
         <h1 className="text-2xl font-semibold">Knowledge</h1>
       </SidebarHeader>
-      <FragmentLoader source={"folders/list"} />
+      <FragmentLoader source={'/folders/list'} />
       <SidebarRail />
     </Sidebar>
   )
 }
-
-

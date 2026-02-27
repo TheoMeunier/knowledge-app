@@ -14,18 +14,19 @@ export default class UpdateFileController {
   async render({ params, inertia }: HttpContext) {
     const file = await File.findByOrFail('id', params.id)
 
-    return inertia.render('tree.file.update', {
+    return inertia.render('file/update', {
       file,
     })
   }
 
-  async upgrade({ request, response }: HttpContext) {
+  async upgrade({ request, response, session }: HttpContext) {
     const { content } = await request.validateUsing(UpdateFileController.validator)
 
     const file = await File.findByOrFail('id', request.param('id'))
     file.content = content
     await file.save()
 
-    return response.redirect().toRoute(`/file/${file.id}/edit`)
+    session.flash('success', 'Update file successfully')
+    return response.redirect().back()
   }
 }

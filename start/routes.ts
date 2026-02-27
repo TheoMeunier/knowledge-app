@@ -31,8 +31,8 @@ router.group(() => {
 router
   .group(() => {
     router.post('/file/create', [StoreFileController, 'store']).as('file.create')
-    router.get('/file/{id}/edit', [UpdateFileController, 'render']).as('files.update')
-    router.post('/file/{id}/edit', [UpdateFileController, 'upgrade']).as('files.upgrade')
+    router.get('/file/:id/edit', [UpdateFileController, 'render']).as('files.update')
+    router.post('/file/:id/edit', [UpdateFileController, 'upgrade']).as('files.upgrade')
 
     router.get('/folders/list', [ListFolderController, 'render']).as('folders.list')
     router.post('/folders/create', [StoreFolderController, 'store']).as('folders.create')

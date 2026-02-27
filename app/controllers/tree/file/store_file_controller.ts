@@ -1,5 +1,3 @@
-// import type { HttpContext } from '@adonisjs/core/http'
-
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
 import File from '#models/file'
@@ -12,7 +10,7 @@ export default class StoreFileController {
     })
   )
 
-  async store({ request, auth, response }: HttpContext) {
+  async store({ request, response, session }: HttpContext) {
     const { title, folderId } = await request.validateUsing(StoreFileController.validator)
 
     const markdownDefaultValue = 'Default Value'
@@ -21,9 +19,10 @@ export default class StoreFileController {
       title: title,
       folderId: folderId,
       content: markdownDefaultValue,
-      userId: auth.user!.id,
+      userId: 1,
     })
 
-    return response.redirect().toRoute(`/file/${file.id}/edit`)
+    session.flash('success', 'File created with successfully')
+    return response.redirect().toPath(`/file/${file.id}/edit`)
   }
 }

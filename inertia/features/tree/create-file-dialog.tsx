@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { Field, FieldGroup } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
-import { useForm } from '@inertiajs/react'
+import { router, useForm } from '@inertiajs/react'
 import { Label } from '@/components/ui/label'
 import { Loader2 } from 'lucide-react'
 
@@ -20,15 +20,20 @@ interface CreatePageProps {
   onOpenChange: (open: boolean) => void
 }
 
-export default function CreateFileDialog({ folderId, open, onOpenChange}: CreatePageProps) {
-  const { data, setData, processing, post } = useForm({
+export default function CreateFileDialog({ folderId, open, onOpenChange }: CreatePageProps) {
+  const { data, setData, processing } = useForm({
     title: '',
-    folderId: folderId
+    folderId: folderId,
   })
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
-    post('/tree/file/create', {})
+
+    router.post('/file/create', data, {
+      onFinish: () => {
+        onOpenChange(false)
+      },
+    })
   }
 
   return (

@@ -8,7 +8,16 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, SquarePen, Trash2, } from 'lucide-react'
+import {
+  ChevronRight,
+  Ellipsis,
+  File,
+  FilePlus,
+  Folder,
+  FolderPlus,
+  SquarePen,
+  Trash2,
+} from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -51,10 +60,11 @@ interface TreeProps {
 }
 
 function Tree({ item }: TreeProps) {
+  // Ce cas ne devrait plus arriver avec le fix, mais on le garde en sécurité
   if (!item.folders) {
     return (
       <>
-        {item.files.map((file, index) => (
+        {item.files?.map((file, index) => (
           <SidebarMenuItem key={index} className="flex items-center group/item">
             <SidebarMenuButton className="data-[active=true]:bg-transparent flex-1">
               <div className="flex items-center gap-2">
@@ -92,6 +102,20 @@ function Tree({ item }: TreeProps) {
           <SidebarMenuSub>
             {item.folders.map((folder, index) => (
               <Tree key={index} item={folder} />
+            ))}
+
+            {item.files?.map((file, index) => (
+              <SidebarMenuItem key={`file-${index}`} className="flex items-center group/item">
+                <SidebarMenuButton className="data-[active=true]:bg-transparent flex-1">
+                  <div className="flex items-center gap-2">
+                    <File className="size-4" />
+                    {file.title}
+                  </div>
+                </SidebarMenuButton>
+                <div className="opacity-0 group-hover/item:opacity-100 transition-opacity">
+                  <TreeAction itemId={file.id} folder={false} path={file.slug} parentId={item.id} />
+                </div>
+              </SidebarMenuItem>
             ))}
           </SidebarMenuSub>
         </CollapsibleContent>
