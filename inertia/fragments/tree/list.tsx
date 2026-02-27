@@ -61,29 +61,6 @@ function Tree({ item }: TreeProps) {
 
   const hasActiveChild = isActive(item)
 
-  if (!item.folders) {
-    return (
-      <>
-        {item.files?.map((file, index) => (
-          <SidebarMenuItem key={index} className="flex items-center group/file">
-            <SidebarMenuButton
-              data-active={url.startsWith(`/file/${file.slug}`)}
-              className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
-            >
-              <div className="flex items-center gap-2">
-                <File className="size-4" />
-                {file.title}
-              </div>
-            </SidebarMenuButton>
-            <div className="opacity-0 group-hover/file:opacity-100 transition-opacity">
-              <TreeAction itemId={file.id} folder={false} path={file.slug} parentId={item.id} />
-            </div>
-          </SidebarMenuItem>
-        ))}
-      </>
-    )
-  }
-
   return (
     <SidebarMenuItem className="group/folder">
       <Collapsible
@@ -92,11 +69,11 @@ function Tree({ item }: TreeProps) {
       >
         <div className="flex items-center">
           <CollapsibleTrigger asChild>
-            <SidebarMenuButton className="flex-1">
-              <div className="flex items-center gap-2">
-                <ChevronRight className="transition-transform size-4" />
-                <Folder className="size-4" />
-                {item.path}
+            <SidebarMenuButton className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 min-w-0">
+                <ChevronRight className="transition-transform size-4 shrink-0" />
+                <Folder className="size-4 shrink-0" />
+                <span className="truncate">{item.path}</span>
               </div>
             </SidebarMenuButton>
           </CollapsibleTrigger>
@@ -105,8 +82,8 @@ function Tree({ item }: TreeProps) {
           </div>
         </div>
         <CollapsibleContent>
-          <SidebarMenuSub>
-            {item.folders.map((folder, index) => (
+          <SidebarMenuSub className="mr-0 pr-0">
+            {item.folders?.map((folder, index) => (
               <Tree key={index} item={folder} />
             ))}
 
@@ -114,13 +91,14 @@ function Tree({ item }: TreeProps) {
               <SidebarMenuItem key={`file-${index}`} className="flex items-center group/file">
                 <SidebarMenuButton
                   data-active={url.startsWith(`/file/${file.slug}`)}
-                  className="flex-1 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
+                  className="flex-1 min-w-0 data-[active=true]:bg-accent data-[active=true]:text-primary data-[active=true]:font-medium"
                 >
-                  <Link href={`/file/${file.slug}`}>
-                    <div className="flex items-center gap-2">
-                      <File className="size-4" />
-                      {file.title}
-                    </div>
+                  <Link
+                    href={`/file/${file.slug}`}
+                    className="flex items-center gap-2 min-w-0 w-full"
+                  >
+                    <File className="size-4 shrink-0" />
+                    <span className="truncate">{file.title}</span>
                   </Link>
                 </SidebarMenuButton>
                 <div className="opacity-0 group-hover/file:opacity-100 transition-opacity">

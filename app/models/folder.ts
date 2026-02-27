@@ -1,5 +1,5 @@
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import File from '#models/file'
 
 export default class Folder extends BaseModel {
@@ -12,10 +12,11 @@ export default class Folder extends BaseModel {
   @column()
   declare parentId: number | null
 
-  @hasMany(() => Folder, {
-    foreignKey: 'parentId',
-  })
-  declare folders: HasMany<typeof Folder>
+  @hasMany(() => Folder, { foreignKey: 'parentId' })
+  declare children: HasMany<typeof Folder>
+
+  @belongsTo(() => Folder, { foreignKey: 'parentId' })
+  declare parent: BelongsTo<typeof Folder>
 
   @hasMany(() => File, {
     foreignKey: 'folderId',

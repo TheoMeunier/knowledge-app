@@ -23,6 +23,6 @@ export default class StoreFileController {
     })
 
     session.flash('success', 'File created with successfully')
-    return response.redirect().toPath(`/file/${file.id}/edit`)
+    return response.redirect().toPath(`/file/${file.slug}/edit`)
   }
 }
