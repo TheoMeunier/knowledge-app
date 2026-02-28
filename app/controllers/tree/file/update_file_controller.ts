@@ -20,7 +20,7 @@ export default class UpdateFileController {
   async upgrade({ request, response, session }: HttpContext) {
     const { content } = await request.validateUsing(UpdateFileController.validator)
 
-    const file = await File.findByOrFail('slug', request.param('slug'))
+    const file = await File.findByOrFail('id', request.param('id'))
     file.content = content
     await file.save()
 
