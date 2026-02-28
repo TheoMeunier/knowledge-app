@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Link } from '@inertiajs/react'
+import { Head, Link } from '@inertiajs/react'
 import { ChevronLeft, ChevronRight, EllipsisVertical, SquarePen, Trash2 } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
@@ -28,6 +28,8 @@ interface FileProps {
 export default function ShowFile({ file, pagination }: FileProps) {
   return (
     <AppLayouts>
+      <Head title={file.title} />
+
       <div className="article">
         <div className="flex justify-between items-center mb-5">
           <h1 className="scroll-m-20 text-primary pb-2 text-3xl font-semibold tracking-tight first:mt-0">

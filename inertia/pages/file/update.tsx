@@ -1,6 +1,6 @@
 import AppLayouts from '@/components/layouts/app-layouts'
 import MdEditor from '@/components/form/mdeditor'
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
 
@@ -27,6 +27,8 @@ export default function UpdateFile({ file }: FileProps) {
 
   return (
     <AppLayouts>
+      <Head title="Update file" />
+
       <form onSubmit={handleSubmit}>
         <MdEditor
           defaultValue={data.content}

@@ -1,16 +1,12 @@
 import { useForm } from '@inertiajs/react'
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-} from '@/components/ui/field'
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { LibraryBig } from 'lucide-react'
 
 export default function Login() {
-  const { data, setData, processing, errors, post, reset } = useForm({
+  const { data, setData, processing, post, reset } = useForm({
     email: '',
     password: '',
   })
@@ -22,7 +18,7 @@ export default function Login() {
       preserveScroll: true,
       onSuccess: () => {
         reset()
-      }
+      },
     })
   }
 
@@ -31,7 +27,7 @@ export default function Login() {
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <LibraryBig className="size-5"/>
+            <LibraryBig className="size-5" />
           </div>
           Knowledge
         </a>
@@ -68,9 +64,7 @@ export default function Login() {
                     />
                   </Field>
                   <Field>
-                    <Button type="submit">
-                      {processing ? "...Loading" : "Login"}
-                    </Button>
+                    <Button type="submit">{processing ? '...Loading' : 'Login'}</Button>
                   </Field>
                 </FieldGroup>
               </form>
