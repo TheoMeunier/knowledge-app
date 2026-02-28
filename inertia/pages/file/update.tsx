@@ -38,7 +38,9 @@ export default function UpdateFile({ file }: FileProps) {
         />
 
         <div className="flex justify-end items-center gap-3">
-          <Button variant="outline">Cancel</Button>
+          <Button variant="outline" onClick={() => window.history.back()}>
+            Cancel
+          </Button>
           <Button type="submit" disabled={processing}>
             {processing && <Loader2 className="animate-spin" />}
             {processing ? 'Saving...' : 'Save'}
