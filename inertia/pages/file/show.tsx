@@ -8,7 +8,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Link } from '@inertiajs/react'
-import { EllipsisVertical, SquarePen, Trash2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, EllipsisVertical, SquarePen, Trash2 } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
 
 interface FileProps {
   file: {
@@ -18,9 +19,13 @@ interface FileProps {
     content: string
     createdAt: string
   }
+  pagination: {
+    prev_slug: string
+    next_slug: string
+  }
 }
 
-export default function ShowFile({ file }: FileProps) {
+export default function ShowFile({ file, pagination }: FileProps) {
   return (
     <AppLayouts>
       <div className="article">
@@ -53,6 +58,31 @@ export default function ShowFile({ file }: FileProps) {
         </div>
 
         <div className="content" dangerouslySetInnerHTML={{ __html: file.content }}></div>
+
+        <Separator className="my-5" />
+
+        <div className="flex justify-between items-center mt-5">
+          <div>
+            {pagination.prev_slug && (
+              <Link href={`/file/${pagination.prev_slug}`}>
+                <Button variant="outline">
+                  <ChevronLeft className="w-4 h-4 mr-1" />
+                  Previous
+                </Button>
+              </Link>
+            )}
+          </div>
+          <div>
+            {pagination.next_slug && (
+              <Link href={`/file/${pagination.next_slug}`}>
+                <Button variant="outline">
+                  Next
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </AppLayouts>
   )
