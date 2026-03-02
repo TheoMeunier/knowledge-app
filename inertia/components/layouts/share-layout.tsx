@@ -1,20 +1,17 @@
 import { ReactNode } from 'react'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
-import AppSidebar from '@/components/layouts/sidebar/app-sidebar'
-import { useFlash } from '@/hooks/use-flash'
 import { Toaster } from '@/components/ui/sonner'
+import ShareSidebar from '@/components/layouts/sidebar/share-sidebar'
 
 interface AppLayoutsProps {
   children: ReactNode
 }
 
-export default function AppLayouts({ children }: AppLayoutsProps) {
-  useFlash()
-
+export default function ShareLayout({ children }: AppLayoutsProps) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <ShareSidebar />
       <main className="w-full">
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />

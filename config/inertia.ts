@@ -1,5 +1,6 @@
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
+import GetTreeByFolderAction from '../app/actions/get_tree_by_folder_action.js'
 
 const inertiaConfig = defineConfig({
   /**
@@ -15,7 +16,31 @@ const inertiaConfig = defineConfig({
     flash: (ctx) => ({
       success: ctx.session?.flashMessages.get('success'),
       error: ctx.session?.flashMessages.get('error'),
+      share: ctx.session?.flashMessages.get('share'),
     }),
+    tree_share: async (ctx) => {
+      const { route, params } = ctx
+
+      const routeName = route?.name
+
+      if (!routeName || !routeName.startsWith('shares')) {
+        return null
+      }
+
+      const token = params.token as string
+      const folderPath = params.path as string
+
+      if (!token) {
+        return null
+      }
+
+      try {
+        const folders = await GetTreeByFolderAction.execute(token)
+        return { folders, share: { token, folder_path: folderPath } }
+      } catch (error) {
+        return null
+      }
+    },
   },
 
   /**

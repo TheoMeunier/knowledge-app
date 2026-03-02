@@ -8,7 +8,17 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, SquarePen, Trash2, } from 'lucide-react'
+import {
+  ChevronRight,
+  Ellipsis,
+  File,
+  FilePlus,
+  Folder,
+  FolderPlus,
+  Share2,
+  SquarePen,
+  Trash2,
+} from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -25,6 +35,8 @@ import CreateFolderDialog from '@/features/tree/create-folder-dialog'
 import DeleteObjectTree from '@/features/tree/delete-tree-dialog'
 import { FolderItem } from '@/types/tree.type'
 import { Link, usePage } from '@inertiajs/react'
+import { Separator } from '@/components/ui/separator'
+import ShareFolderDialog from '@/features/tree/share-folder-dialog'
 
 interface TreeListProps {
   folders: FolderItem[]
@@ -127,6 +139,7 @@ function TreeAction({
   const [openCreate, setOpenCreate] = useState(false)
   const [openCreateFolder, setOpenCreateFolder] = useState(false)
   const [openDelete, setOpenDelete] = useState(false)
+  const [openShare, setOpenShare] = useState(false)
 
   return (
     <>
@@ -158,16 +171,28 @@ function TreeAction({
                 <FilePlus />
                 Create Page
               </DropdownMenuItem>
+              <Separator className="my-2" />
+              <DropdownMenuItem
+                onSelect={(e) => {
+                  e.preventDefault()
+                  setOpenShare(true)
+                }}
+              >
+                <Share2 />
+                Share
+              </DropdownMenuItem>
             </DropdownMenuGroup>
           )}
           {path !== '/' && (
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link href={`/file/${path}/edit`} className="flex items-center gap-2">
-                  <SquarePen />
-                  Edit
-                </Link>
-              </DropdownMenuItem>
+              {!folder && (
+                <DropdownMenuItem>
+                  <Link href={`/file/${path}/edit`} className="flex items-center gap-2">
+                    <SquarePen />
+                    Edit
+                  </Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onSelect={(e) => {
                   e.preventDefault()
@@ -190,6 +215,7 @@ function TreeAction({
         onOpenChange={setOpenCreateFolder}
       />
       <DeleteObjectTree id={itemId} open={openDelete} onOpenChange={setOpenDelete} />
+      <ShareFolderDialog folderId={itemId} open={openShare} onOpenChange={setOpenShare} />
     </>
   )
 }
