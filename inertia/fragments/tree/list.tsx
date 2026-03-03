@@ -8,17 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import {
-  ChevronRight,
-  Ellipsis,
-  File,
-  FilePlus,
-  Folder,
-  FolderPlus,
-  Share2,
-  SquarePen,
-  Trash2,
-} from 'lucide-react'
+import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, Share2, SquarePen, Trash2, } from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -141,6 +131,8 @@ function TreeAction({
   const [openDelete, setOpenDelete] = useState(false)
   const [openShare, setOpenShare] = useState(false)
 
+  const urlRemoving = folder ? `/folders/${itemId}/delete` : `/file/${itemId}/delete`
+
   return (
     <>
       <DropdownMenu modal={false}>
@@ -214,7 +206,12 @@ function TreeAction({
         open={openCreateFolder}
         onOpenChange={setOpenCreateFolder}
       />
-      <DeleteObjectTree id={itemId} open={openDelete} onOpenChange={setOpenDelete} />
+      <DeleteObjectTree
+        id={itemId}
+        open={openDelete}
+        url={urlRemoving}
+        onOpenChange={setOpenDelete}
+      />
       <ShareFolderDialog folderId={itemId} open={openShare} onOpenChange={setOpenShare} />
     </>
   )

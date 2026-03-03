@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button'
 import { Head, Link } from '@inertiajs/react'
 import { ChevronLeft, ChevronRight, EllipsisVertical, SquarePen, Trash2 } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
+import DeleteObjectTree from '@/features/tree/delete-tree-dialog'
+import { useState } from 'react'
 
 interface FileProps {
   file: {
@@ -26,6 +28,8 @@ interface FileProps {
 }
 
 export default function ShowFile({ file, pagination }: FileProps) {
+  const [openDelete, setOpenDelete] = useState(false)
+
   return (
     <AppLayouts>
       <Head title={file.title} />
@@ -50,7 +54,13 @@ export default function ShowFile({ file, pagination }: FileProps) {
                     Edit
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem variant="destructive">
+                <DropdownMenuItem
+                  variant="destructive"
+                  onSelect={(e) => {
+                    e.preventDefault()
+                    setOpenDelete(true)
+                  }}
+                >
                   <Trash2 />
                   Delete
                 </DropdownMenuItem>
@@ -86,6 +96,13 @@ export default function ShowFile({ file, pagination }: FileProps) {
           </div>
         </div>
       </div>
+
+      <DeleteObjectTree
+        id={file.id}
+        open={openDelete}
+        url={`/file/${file.id}/delete`}
+        onOpenChange={setOpenDelete}
+      />
     </AppLayouts>
   )
 }

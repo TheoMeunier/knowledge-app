@@ -14,6 +14,7 @@ import { useForm } from '@inertiajs/react'
 interface DeleteObjectTree {
   id: number
   open: boolean
+  url: string
   onOpenChange: (open: boolean) => void
 }
 
@@ -23,7 +24,7 @@ export default function DeleteObjectTree(props: DeleteObjectTree) {
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    destroy(`/folders/${props.id}/delete`, {
+    destroy(props.url, {
       onSuccess: () => {
         props.onOpenChange(false)
 
@@ -61,7 +62,7 @@ export default function DeleteObjectTree(props: DeleteObjectTree) {
 
             <Button variant="destructive" className="w-full" type="submit">
               {processing && <Loader2 className="animate-spin" />}
-              {processing ? 'Removing...' : 'Remove'}
+              {processing ? 'Removing' : 'Remove'}
             </Button>
           </DialogFooter>
         </form>

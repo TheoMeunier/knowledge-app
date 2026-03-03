@@ -1,13 +1,12 @@
-// import type { HttpContext } from '@adonisjs/core/http'
-
 import { HttpContext } from '@adonisjs/core/http'
 import File from '#models/file'
 
 export default class RemoveFileController {
-  async remove({ request, response }: HttpContext) {
+  async remove({ request, response, session }: HttpContext) {
     const file = await File.findByOrFail('id', request.param('id'))
     await file.delete()
 
-    return response.redirect().toRoute('tree.folders.list')
+    session.flash('success', 'File remove with successfully')
+    return response.redirect().toRoute('home')
   }
 }

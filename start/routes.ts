@@ -9,6 +9,9 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+
+const RemoveFileController = () => import('#controllers/tree/file/remove_file_controller')
+
 const ShowFileShareController = () => import('#controllers/tree/share/show_file_share_controller')
 
 const ListFolderShareController = () =>
@@ -40,6 +43,7 @@ router
         router.get('/file/:slug', [ShowFileController, 'render']).as('file.show')
         router.get('/file/:slug/edit', [UpdateFileController, 'render']).as('files.update')
         router.post('/file/:id/edit', [UpdateFileController, 'upgrade']).as('files.upgrade')
+        router.delete('/file/:id/delete', [RemoveFileController, 'remove']).as('files.remove')
 
         router.get('/folders/list', [ListFolderController, 'render']).as('folders.list')
         router.post('/folders/create', [StoreFolderController, 'store']).as('folders.create')

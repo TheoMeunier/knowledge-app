@@ -53,8 +53,6 @@ export function TreeShare({ item, share }: TreeShareProps) {
     return !!folder.folders?.some((sub) => isActive(sub))
   }
 
-  console.log(url)
-
   const hasActiveChild = isActive(item)
 
   const buildUrl = (...parts: string[]) =>
