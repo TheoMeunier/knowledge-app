@@ -43,7 +43,7 @@ export default function UpdateProfile({ user }: UpdateProfileProps) {
               type="text"
               required
             />
-            <FieldError>{errors.fullName}</FieldError>
+            {errors.fullName && <FieldError>{errors.fullName}</FieldError>}
           </Field>
 
           <Field>
@@ -55,7 +55,7 @@ export default function UpdateProfile({ user }: UpdateProfileProps) {
               type="email"
               required
             />
-            <FieldError>{errors.email}</FieldError>
+            {errors.email && <FieldError>{errors.email}</FieldError>}
           </Field>
         </FieldGroup>
 

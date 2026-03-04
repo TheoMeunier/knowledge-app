@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Field, FieldGroup } from '@/components/ui/field'
+import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { useForm } from '@inertiajs/react'
 import { Label } from '@/components/ui/label'
@@ -21,7 +21,7 @@ interface CreateFolderProps {
 }
 
 export default function CreateFolderDialog({ parentId, open, onOpenChange }: CreateFolderProps) {
-  const { data, setData, processing, post } = useForm({
+  const { data, setData, processing, post, errors } = useForm({
     path: '',
     parentId: parentId,
   })
@@ -60,6 +60,7 @@ export default function CreateFolderDialog({ parentId, open, onOpenChange }: Cre
                 value={data.path}
                 onChange={(e) => setData('path', e.target.value)}
               />
+              {errors.path && <FieldError>{errors.path}</FieldError>}
             </Field>
           </FieldGroup>
           <DialogFooter className="grid grid-cols-2 gap-2 mt-5">

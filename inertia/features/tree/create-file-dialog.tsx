@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { Field, FieldGroup } from '@/components/ui/field'
+import { Field, FieldError, FieldGroup } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { router, useForm } from '@inertiajs/react'
 import { Label } from '@/components/ui/label'
@@ -21,7 +21,7 @@ interface CreatePageProps {
 }
 
 export default function CreateFileDialog({ folderId, open, onOpenChange }: CreatePageProps) {
-  const { data, setData, processing } = useForm({
+  const { data, setData, processing, errors } = useForm({
     title: '',
     folderId: folderId,
   })
@@ -55,6 +55,7 @@ export default function CreateFileDialog({ folderId, open, onOpenChange }: Creat
                 value={data.title}
                 onChange={(e) => setData('title', e.target.value)}
               />
+              {errors.title && <FieldError>{errors.title}</FieldError>}
             </Field>
           </FieldGroup>
           <DialogFooter className="grid grid-cols-2 gap-2 mt-5">

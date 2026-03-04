@@ -1,17 +1,17 @@
 import { useForm } from '@inertiajs/react'
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { LibraryBig } from 'lucide-react'
+import { LibraryBig, Loader2 } from 'lucide-react'
 
 export default function Login() {
-  const { data, setData, processing, post, reset } = useForm({
+  const { data, setData, processing, post, reset, errors } = useForm({
     email: '',
     password: '',
   })
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     post('/login', {
@@ -25,12 +25,10 @@ export default function Login() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="#" className="flex items-center gap-2 self-center font-medium">
-          <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
-            <LibraryBig className="size-5" />
-          </div>
-          Knowledge
-        </a>
+        <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
+          <LibraryBig className="size-5" />
+        </div>
+        Knowledge
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader className="text-center">
@@ -40,6 +38,10 @@ export default function Login() {
             <CardContent>
               <form onSubmit={handleSubmit}>
                 <FieldGroup>
+                  {(errors.email || errors.password) && (
+                    <FieldError>These credentials do not match our records.</FieldError>
+                  )}
+
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
                     <Input
@@ -64,7 +66,10 @@ export default function Login() {
                     />
                   </Field>
                   <Field>
-                    <Button type="submit">{processing ? '...Loading' : 'Login'}</Button>
+                    <Button type="submit" disabled={processing}>
+                      {processing && <Loader2 className="animate-spin" />}
+                      Login
+                    </Button>
                   </Field>
                 </FieldGroup>
               </form>

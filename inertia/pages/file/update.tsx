@@ -3,6 +3,7 @@ import MdEditor from '@/components/form/mdeditor'
 import { Head, useForm } from '@inertiajs/react'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-react'
+import { FieldError } from '@/components/ui/field'
 
 interface FileProps {
   file: {
@@ -15,7 +16,7 @@ interface FileProps {
 }
 
 export default function UpdateFile({ file }: FileProps) {
-  const { data, setData, post, processing } = useForm({
+  const { data, setData, post, processing, errors } = useForm({
     content: file.content,
   })
 
@@ -36,6 +37,7 @@ export default function UpdateFile({ file }: FileProps) {
           value={data.content}
           onChange={(v) => setData('content', v)}
         />
+        {errors.content && <FieldError>{errors.content}</FieldError>}
 
         <div className="flex justify-end items-center gap-3">
           <Button variant="outline" onClick={() => window.history.back()}>
