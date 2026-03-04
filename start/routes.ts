@@ -10,6 +10,18 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const DeleteShareController = () => import('#controllers/tree/share/delete_share_controller')
+
+const ListShareProfileController = () =>
+  import('#controllers/profile/list_share_profile_controller')
+
+const LogoutController = () => import('#controllers/auth/logout_controller')
+
+const UpdatePasswordProfileController = () =>
+  import('#controllers/profile/update_password_profile_controller')
+
+const UpdateProfilesController = () => import('#controllers/profile/update_profile_controller')
+
 const RemoveFileController = () => import('#controllers/tree/file/remove_file_controller')
 
 const ShowFileShareController = () => import('#controllers/tree/share/show_file_share_controller')
@@ -37,6 +49,10 @@ router.group(() => {
 
 router
   .group(() => {
+    //home
+    router.get('/', [HomeController, 'index']).as('home')
+
+    // tree
     router
       .group(() => {
         router.post('/file/create', [StoreFileController, 'store']).as('file.create')
@@ -52,7 +68,19 @@ router
       })
       .as('tree')
 
-    router.get('/', [HomeController, 'index']).as('home')
+    //profile
+    router.get('/profile', [UpdateProfilesController, 'render']).as('profile')
+    router.post('/profile/update', [UpdateProfilesController, 'update']).as('profile.update')
+    router
+      .post('/profile/update/password', [UpdatePasswordProfileController, 'update'])
+      .as('profile.update.password')
+    router.get('/profile/shares', [ListShareProfileController, 'render']).as('profile.shares')
+
+    //shares
+    router.delete('/shares/:id/delete', [DeleteShareController, 'remove']).as('shares.delete')
+
+    //logout
+    router.delete('/logout', [LogoutController, 'logout'])
   })
   .middleware([middleware.auth()])
 

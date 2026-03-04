@@ -1,7 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Share from '#models/share'
 import Folder from '#models/folder'
-import ShareDto from '../../../dtos/share_dto.js'
+import ShareDto from '../../../dtos/shares/share_dto.js'
 
 export default class ListFolderShareController {
   async render({ request, inertia }: HttpContext) {
