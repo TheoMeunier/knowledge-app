@@ -2,8 +2,8 @@ import { ReactNode } from 'react'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { Separator } from '@/components/ui/separator'
 import AppSidebar from '@/components/layouts/sidebar/app-sidebar'
-import { useFlash } from '@/hooks/use-flash'
 import { Toaster } from '@/components/ui/sonner'
+import { useFlash } from '@/hooks/use_flash'
 
 interface AppLayoutsProps {
   children: ReactNode
