@@ -1,6 +1,6 @@
 <div align="center">
 <a href="https://github.com/TheoMeunier/knowledge_app">
-<img src="docs/images/logo.png" alt="Logo" width="150" height="150">
+<img src="docs/imgs/logo.png" alt="Logo" width="150" height="150">
 </a>
 
 <h2 align="center">Uptime Kotlin</h3>
