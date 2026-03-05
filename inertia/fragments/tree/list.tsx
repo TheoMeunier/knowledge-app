@@ -8,17 +8,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
 } from '@/components/ui/sidebar'
-import {
-  ChevronRight,
-  Ellipsis,
-  File,
-  FilePlus,
-  Folder,
-  FolderPlus,
-  Share2,
-  SquarePen,
-  Trash2,
-} from 'lucide-react'
+import { ChevronRight, Ellipsis, File, FilePlus, Folder, FolderPlus, Share2, SquarePen, Trash2, } from 'lucide-react'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { useState } from 'react'
 import {
@@ -95,8 +85,8 @@ function Tree({ item }: TreeProps) {
         </div>
         <CollapsibleContent>
           <SidebarMenuSub className="mr-0 pr-0">
-            {item.folders?.map((folder, index) => (
-              <Tree key={index} item={folder} />
+            {item.folders?.map((folder) => (
+              <Tree key={folder.id} item={folder} />
             ))}
 
             {item.files?.map((file, index) => (
