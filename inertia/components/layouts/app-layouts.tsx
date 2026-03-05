@@ -16,15 +16,17 @@ export default function AppLayouts({ children }: AppLayoutsProps) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="w-full">
+      <main className="flex flex-col w-full h-screen overflow-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
           <AppBreadcrumb />
         </header>
-        <div className="container mx-auto py-8">
-          {children}
-          <Toaster richColors />
+        <div className="flex-1 overflow-y-auto">
+          <div className="container py-8">
+            {children}
+            <Toaster richColors />
+          </div>
         </div>
       </main>
     </SidebarProvider>
