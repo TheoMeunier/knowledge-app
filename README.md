@@ -56,7 +56,7 @@ services:
     container_name: knowledge_app
     restart: unless-stopped
     ports:
-      - "3333:3333"
+      - '3333:3333'
     environment:
       TZ: Europe/Paris
       APP_URL: ${APP_URL}
@@ -74,7 +74,7 @@ services:
     container_name: knowledge_app_database
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_DB: knowledge_app
       POSTGRES_USER: knowledge_app
@@ -90,7 +90,6 @@ services:
 networks:
   app_network:
     driver: bridge
-
 ```
 
 3. Configure the `variable environnement` file
@@ -101,7 +100,7 @@ networks:
 - `APP_KEY` : The encryption key used to encrypt sensitive data in the application. It should be a random string of at
   least 32 characters.
 
-3.2 PostgreSQL Configuration:
+  3.2 PostgreSQL Configuration:
 
 - `DB_HOST` : The host of your PostgreSQL database
 - `DB_PORT` : The port of your PostgreSQL database
