@@ -3,7 +3,7 @@
 <img src="docs/imgs/logo-2.png" alt="Logo" width="150" height="150">
 </a>
 
-<h2 align="center">Uptime Kotlin</h3>
+<h2 align="center">Knowledge</h3>
   <p align="center">
     <a href="https://github.com/TheoMeunier/knowledge-app/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
@@ -114,11 +114,29 @@ networks:
    docker compose up -d
 ```
 
-5. Access the application
+5. Wait for the application to start and initialize the database. You can check the logs to see when it's ready.
 
 ```bash
-   http://localhost:3333
+   docker compose exec knowledge_app bash
+   node ace generate:key
+   node ace migration:run
+   node ace db:seed
 ```
+
+6. Access the application
+
+Once the server is running, open your browser and go to:
+
+http://localhost:3333
+
+### Default administrator account
+
+The database seeder creates a default administrator account with the following credentials:
+
+Username: `admin@knowledge.fr`  
+Password: `knowledge`
+
+⚠️ It is recommended to change these credentials after the first login.
 
 ## Contributing
 
