@@ -77,8 +77,7 @@ Use the **Feature Request** issue template when available.
    git clone https://github.com/TheoMeunier/knowledge-app.git
    ```
 3. Create a new branch
-    ```bash
-    git checkout -b my-feature-branch
-    ```
+   ```bash
+   git checkout -b my-feature-branch
+   ```
 4. Follow the instructions in the README to start the project locally
-
