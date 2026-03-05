@@ -1,4 +1,4 @@
-import { useForm } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Field, FieldError, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -24,6 +24,8 @@ export default function Login() {
 
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <Head title="Login" />
+
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex justify-center items-center gap-2 text-lg font-semibold">
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
