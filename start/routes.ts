@@ -10,6 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const UploadImagesController = () => import('#controllers/images/upload_images_controller')
+
 const DeleteShareController = () => import('#controllers/tree/share/delete_share_controller')
 
 const ListShareProfileController = () =>
@@ -81,6 +83,9 @@ router
 
     //logout
     router.delete('/logout', [LogoutController, 'logout'])
+
+    //Upload
+    router.post('/upload', [UploadImagesController, 'upload']).as('upload')
   })
   .middleware([middleware.auth()])
 
