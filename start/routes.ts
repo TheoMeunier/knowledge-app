@@ -10,6 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 
+const ShowImagesController = () => import('#controllers/images/show_images_controller')
+
 const UploadImagesController = () => import('#controllers/images/upload_images_controller')
 
 const DeleteShareController = () => import('#controllers/tree/share/delete_share_controller')
@@ -92,3 +94,5 @@ router
 // Share
 router.get('/shares/:token/:path', [ListFolderShareController, 'render']).as('shares.show')
 router.get('/shares/:token/:path/:file', [ShowFileShareController, 'render']).as('shares.file.show')
+
+router.get(`/images/*`, [ShowImagesController, 'show']).as('images.show')
