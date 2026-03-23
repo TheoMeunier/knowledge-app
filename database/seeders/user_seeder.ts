@@ -1,5 +1,6 @@
 import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import User from '#models/user'
+import Role from '#enums/role'
 
 export default class extends BaseSeeder {
   async run() {
@@ -12,6 +13,7 @@ export default class extends BaseSeeder {
         fullName: 'admin',
         email: email,
         password: 'knowledge',
+        role: Role.ADMIN,
       })
 
       console.log('Admin user created')
