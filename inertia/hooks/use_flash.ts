@@ -4,6 +4,7 @@ import { usePage } from '@inertiajs/react'
 
 type FlashMessages = {
   success?: string
+  error?: string
 }
 
 export function useFlash() {
@@ -11,5 +12,6 @@ export function useFlash() {
 
   useEffect(() => {
     if (flash.success) toast.success(flash.success)
+    if (flash.error) toast.error(flash.error)
   }, [flash])
 }

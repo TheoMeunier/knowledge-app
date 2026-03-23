@@ -6,14 +6,14 @@ import { Button } from '@/components/ui/button'
 
 interface UpdateProfileProps {
   user: {
-    fullName: string
+    username: string
     email: string
   }
 }
 
 export default function UpdateProfile({ user }: UpdateProfileProps) {
   const { data, setData, post, processing, errors } = useForm({
-    fullName: user.fullName,
+    fullName: user.username,
     email: user.email,
   })
 

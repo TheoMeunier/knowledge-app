@@ -1,6 +1,7 @@
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
 import GetTreeByFolderAction from '../app/actions/get_tree_by_folder_action.js'
+import UserDto from '../app/dtos/users/user_dto.js'
 
 const inertiaConfig = defineConfig({
   /**
@@ -12,7 +13,10 @@ const inertiaConfig = defineConfig({
    * Data that should be shared with all rendered pages
    */
   sharedData: {
-    user: (ctx) => ctx.inertia.always(() => ctx.auth.user),
+    user: (ctx) =>
+      ctx.inertia.always(async () =>
+        ctx.auth.user ? await UserDto.fromModel(ctx.auth.user) : null
+      ),
     flash: (ctx) => ({
       success: ctx.session?.flashMessages.get('success'),
       error: ctx.session?.flashMessages.get('error'),
