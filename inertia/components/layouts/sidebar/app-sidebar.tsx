@@ -8,7 +8,7 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { BadgeCheck, ChevronsUpDown, LibraryBig, LogOut, Share2 } from 'lucide-react'
+import { BadgeCheck, ChevronsUpDown, LibraryBig, LogOut, Settings, Share2 } from 'lucide-react'
 import { FragmentLoader } from '@/components/load_fragment'
 import {
   DropdownMenu,
@@ -22,11 +22,13 @@ import {
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Link, router, usePage } from '@inertiajs/react'
 import { getInitials } from '@/lib/utils'
+import Role from '#enums/role'
 
 interface CurrentUserPropsPage {
   user: {
-    fullName: string
+    username: string
     email: string
+    role: Role
   }
   [key: string]: unknown
 }
@@ -56,11 +58,11 @@ export default function AppSidebar() {
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarFallback className="rounded-lg">
-                      {getInitials(props.user.fullName)}
+                      {getInitials(props.user.username)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{props.user.fullName}</span>
+                    <span className="truncate font-medium">{props.user.username}</span>
                     <span className="truncate text-xs">{props.user.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
@@ -76,11 +78,11 @@ export default function AppSidebar() {
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarFallback className="rounded-lg">
-                        {getInitials(props.user.fullName)}
+                        {getInitials(props.user.username)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium">{props.user.fullName}</span>
+                      <span className="truncate font-medium">{props.user.username}</span>
                       <span className="truncate text-xs">{props.user.email}</span>
                     </div>
                   </div>
@@ -100,6 +102,19 @@ export default function AppSidebar() {
                     </Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
+                {props.user.role === Role.ADMIN && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem variant="destructive" asChild>
+                        <Link href="/admin">
+                          <Settings />
+                          Administration
+                        </Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                  </>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <button onClick={() => router.delete('/logout')}>

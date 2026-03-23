@@ -1,5 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
 import vine from '@vinejs/vine'
+import UserDto from '../../dtos/users/user_dto.js'
 
 export default class UpdateProfilesController {
   static validator = vine.compile(
@@ -14,8 +15,9 @@ export default class UpdateProfilesController {
 
     if (!user) throw new Error('User not found')
 
+    const dto = await UserDto.fromModel(user)
     return inertia.render('profile/index', {
-      user,
+      user: dto,
     })
   }
 

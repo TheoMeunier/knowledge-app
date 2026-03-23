@@ -9,6 +9,20 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
+import Role from '#enums/role'
+
+const AdminUpdateUsersController = () =>
+  import('#controllers/admin/users/admin_update_users_controller')
+
+const AdminRemoveUsersController = () =>
+  import('#controllers/admin/users/admin_remove_users_controller')
+
+const AdminController = () => import('#controllers/admin/admin_controller')
+
+const AdminListUserController = () => import('#controllers/admin/users/admin_list_users_controller')
+
+const AdminStoreUsersController = () =>
+  import('#controllers/admin/users/admin_store_users_controller')
 
 const ShowImagesController = () => import('#controllers/images/show_images_controller')
 
@@ -88,6 +102,21 @@ router
 
     //Upload
     router.post('/upload', [UploadImagesController, 'upload']).as('upload')
+
+    // Admin
+    router
+      .group(() => {
+        router.get('/', [AdminController, 'render']).as('index')
+        router.get('/users', [AdminListUserController, 'render']).as('users.lists')
+        router.post('/users/store', [AdminStoreUsersController, 'store']).as('users.store')
+        router.post('/users/:id/update', [AdminUpdateUsersController, 'update']).as('users.update')
+        router
+          .delete('/users/:id/remove', [AdminRemoveUsersController, 'remove'])
+          .as('users.delete')
+      })
+      .middleware([middleware.role({ roles: [Role.ADMIN] })])
+      .prefix('/admin')
+      .as('admin')
   })
   .middleware([middleware.auth()])
 
