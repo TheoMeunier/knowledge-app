@@ -1,7 +1,14 @@
 import AdminLayout from '@/features/admin/layouts/admin-layout'
 import { LucideUsers, Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { useState } from 'react'
 import AdminCreateUserModal from '@/features/admin/users/components/admin-create-user-modal'
 import AdminDeleteUserDialog from '@/features/admin/users/components/admin-delete-user-dialog'
