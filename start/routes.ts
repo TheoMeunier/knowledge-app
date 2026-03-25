@@ -10,6 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import Role from '#enums/role'
+const AdminListSharesController = () =>
+  import('#controllers/admin/shares/admin_list_shares_controller')
 
 const AdminUpdateUsersController = () =>
   import('#controllers/admin/users/admin_update_users_controller')
@@ -113,6 +115,8 @@ router
         router
           .delete('/users/:id/remove', [AdminRemoveUsersController, 'remove'])
           .as('users.delete')
+
+        router.get('/shares', [AdminListSharesController, 'render']).as('shares.lists')
       })
       .middleware([middleware.role({ roles: [Role.ADMIN] })])
       .prefix('/admin')
