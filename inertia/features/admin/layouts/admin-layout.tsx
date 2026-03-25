@@ -1,5 +1,5 @@
 import AppLayouts from '@/components/layouts/app-layouts'
-import { FileText, Home, Share2, Users } from 'lucide-react'
+import { Home, Share2, Users } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { Head, Link, usePage } from '@inertiajs/react'
@@ -28,12 +28,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     {
       title: 'Content',
       items: [
-        {
-          id: 'files',
-          url: '/admin/files',
-          label: 'Files',
-          icon: FileText,
-        },
         {
           id: 'shares',
           url: '/admin/shares',
