@@ -29,7 +29,7 @@ Ideal for internal documentation, technical guides, project notes, or community 
 - Powerful Markdown editor for writing and formatting content
 - Easy document sharing across teams or communities
 - Clean and intuitive interface for fast documentation
-- Self**-hostable and lightweight deployment**
+- Self hostable and lightweight deployment
 - Designed for collaborative documentation
 
 ### Built With
