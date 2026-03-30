@@ -10,9 +10,11 @@ export default class ListFolderShareController {
     const share = await Share.query().where('token', token).preload('folder').firstOrFail()
     const folders = await this.getItems(share.folder.id!!)
 
+    const sharesDto = await ShareDto.fromModel(share.id, share.token, share.folder.path)
+
     return inertia.render('shares/list_collapsible', {
       folders: folders,
-      share: await ShareDto.fromModel(share.id, share.token, share.folder.path),
+      share: sharesDto,
     })
   }
 
