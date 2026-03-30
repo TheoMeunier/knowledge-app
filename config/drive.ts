@@ -1,5 +1,6 @@
 import env from '#start/env'
 import { defineConfig, services } from '@adonisjs/drive'
+import app from '@adonisjs/core/services/app'
 
 const driveConfig = defineConfig({
   default: env.get('DRIVE_DISK'),
@@ -9,6 +10,12 @@ const driveConfig = defineConfig({
    * services each using the same or a different driver.
    */
   services: {
+    fs: services.fs({
+      location: app.makePath('storage'),
+      serveFiles: true,
+      routeBasePath: '/uploads',
+      visibility: 'public',
+    }),
     s3: services.s3({
       credentials: {
         accessKeyId: env.get('AWS_ACCESS_KEY_ID'),
