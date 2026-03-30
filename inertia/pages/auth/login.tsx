@@ -6,7 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { LibraryBig, Loader2 } from 'lucide-react'
 
 export default function Login() {
-  const { data, setData, processing, post, reset, errors } = useForm({
+  const { data, setData, processing, post, reset, errors } = useForm<{
+    email: string
+    password: string
+    E_INVALID_CREDENTIALS?: string
+  }>({
     email: '',
     password: '',
   })
@@ -42,9 +46,13 @@ export default function Login() {
             <CardContent>
               <form onSubmit={handleSubmit}>
                 <FieldGroup>
-                  {(errors.email || errors.password) && (
-                    <FieldError>These credentials do not match our records.</FieldError>
-                  )}
+                  <div className="text-center ">
+                    {errors.E_INVALID_CREDENTIALS && (
+                      <FieldError className="font-bold">
+                        These credentials do not match our records.
+                      </FieldError>
+                    )}
+                  </div>
 
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
