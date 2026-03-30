@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto'
 import drive from '@adonisjs/drive/services/main'
 import { existsSync } from 'node:fs'
 import { join } from 'node:path'
+import env from '#start/env'
 
 export type SupportedFormat = 'webp' | 'png' | 'jpeg' | 'avif'
 export type SupportedFit = keyof FitEnum
@@ -42,6 +43,7 @@ const FIT_MAP: Record<string, keyof FitEnum> = {
 @inject()
 export default class ImageTransformService {
   private readonly cacheDir = './storage/.cache/images'
+  private readonly driverDisk = env.get('DRIVE_DISK') ?? 'secret-key'
 
   async transform(options: TransformOptions): Promise<TransformResult> {
     const { src, width, height, quality = 80, format = 'webp', fit = 'cover' } = options
@@ -76,7 +78,7 @@ export default class ImageTransformService {
   }
 
   private async fetchFromDrive(src: string): Promise<Buffer> {
-    const stream = await drive.use('s3').getStream(src)
+    const stream = await drive.use(this.driverDisk).getStream(src)
     const chunks: Buffer[] = []
     for await (const chunk of stream) chunks.push(Buffer.from(chunk))
     return Buffer.concat(chunks)
