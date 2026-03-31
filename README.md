@@ -66,6 +66,8 @@ services:
       DB_USER: knowledge_app
       DB_PASSWORD: knowledge_app
       DB_DATABASE: knowledge_app
+      DRIVE_DISK: fs
+      IMAGE_PROXY_SECRET: your-secret-key
     networks:
       - app_network
 
