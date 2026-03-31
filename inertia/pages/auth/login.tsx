@@ -46,13 +46,13 @@ export default function Login() {
             <CardContent>
               <form onSubmit={handleSubmit}>
                 <FieldGroup>
-                  <div className="text-center ">
-                    {errors.E_INVALID_CREDENTIALS && (
+                  {errors.E_INVALID_CREDENTIALS && (
+                    <div className="text-center">
                       <FieldError className="font-bold">
                         These credentials do not match our records.
                       </FieldError>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
                   <Field>
                     <FieldLabel htmlFor="email">Email</FieldLabel>
