@@ -10,6 +10,8 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import Role from '#enums/role'
+const HealthChecksController = () => import('#controllers/helcheck/health_checks_controller')
+
 const AdminListSharesController = () =>
   import('#controllers/admin/shares/admin_list_shares_controller')
 
@@ -129,3 +131,6 @@ router.get('/shares/:token/:path', [ListFolderShareController, 'render']).as('sh
 router.get('/shares/:token/:path/:file', [ShowFileShareController, 'render']).as('shares.file.show')
 
 router.get(`/images/*`, [ShowImagesController, 'show']).as('images.show')
+
+router.get('/health/live', [HealthChecksController, 'live'])
+router.get('/health/ready', [HealthChecksController, 'ready'])
